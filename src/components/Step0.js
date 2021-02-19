@@ -2,10 +2,26 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div``;
 
-const Step0 = () => {
+const StyledInput = styled.input`
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  border-bottom: 3px solid white;
+  font-size: 2em;
+  color: white;
+  outline: none;
+`;
+
+const Step0 = ({ userName, onChange }) => {
   return (
     <StyledContainer>
       <p>This is step 0</p>
+      <StyledInput
+        value={userName}
+        id="userName"
+        type="text"
+        onChange={onChange}
+      ></StyledInput>
     </StyledContainer>
   );
 };
