@@ -15,10 +15,22 @@ const StyledContainer = styled.div`
 
 const FormContainer = () => {
   const [step, setStep] = useState(0);
+  const [formData, setFormData] = useState({
+    userName: "",
+  });
+
+  const handleChange = (evt) => {
+    const { id, value } = evt.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+    console.log(formData.userName);
+  };
 
   return (
     <StyledContainer>
-      {step === 0 && <Step0 />}
+      {step === 0 && <Step0 onChange={handleChange} />}
       {step === 1 && <Step1 />}
       {step === 2 && <Step2 />}
     </StyledContainer>
