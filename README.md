@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# This a easy-peasy implementation using useEffect to build a button-less form in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+If you are facing a form design with no buttons or with automatic stage changes after an input has been written, chances are you will be using a structure similar to this.
+This is just a proof of concept. And optimal design should include at least an easy way to go back and modify information for the sake of UX.
+
+
+---
 
 ## Available Scripts
 
