@@ -4,12 +4,35 @@ import Step0 from "../components/Step0";
 import Step1 from "../components/Step1";
 import Step2 from "../components/Step2";
 import Step3 from "../components/Step3";
+import StepIndicator from "../components/StepIndicator";
+import Fade from "../components/swipeAnimation";
+
 const StyledContainer = styled.div`
   display: flex;
+  flex-flow: column;
   width: 100%;
   align-items: center;
   align-content: center;
   justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 500px;
+  align-items: center;
+`;
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  > div {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const WAIT_INTERVAL = 750;
@@ -21,7 +44,7 @@ const bestGame = [
   "Call of Duty Warzone",
 ];
 const FormContainer = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState({ current: 0, previous: null });
   const [formData, setFormData] = useState({
     userName: "",
     color: "",
@@ -71,13 +94,13 @@ const FormContainer = () => {
     if (completedSteps.step0 && !completedSteps.step1) {
       clearTimeout(progressTimer);
       progressTimer = setTimeout(() => {
-        return setStep(1);
+        return setStep({ previous: step.current, current: 1 });
       }, WAIT_INTERVAL);
     }
     if (completedSteps.step0 && completedSteps.step1) {
       clearTimeout(progressTimer);
       progressTimer = setTimeout(() => {
-        return setStep(2);
+        return setStep({ previous: step.current, current: 2 });
       }, WAIT_INTERVAL);
     }
     if (completedSteps.step0 && completedSteps.step1 && completedSteps.step2) {
@@ -85,19 +108,51 @@ const FormContainer = () => {
     }
   }, [completedSteps]);
 
+  const calculateDirection = () => {
+    if (step.current > step.previous) return "onwards";
+    if (step.current < step.previous) return "reverse";
+    return null;
+  };
+
+  const handleChangeStep = (newStep) => {
+    setStep({ previous: step.current, current: newStep });
+    console.log(step);
+  };
+
   return (
     <StyledContainer>
-      {step === 0 && <Step0 onChange={handleChange} />}
-      {step === 1 && <Step1 onChange={handleChange} />}
-      {step === 2 && (
-        <Step2
-          options={bestGame}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          isComplete={isComplete}
-        />
-      )}
-      {step === 3 && <Step3 sentData={formData} />}
+      <Container>
+        {step !== 3 && (
+          <>
+            <StepIndicator
+              currentStep={step.current}
+              onStepClick={handleChangeStep}
+            />
+            <ContentWrapper>
+              <Fade show={step.current === 0} direction={calculateDirection()}>
+                <Step0 onChange={handleChange} userName={formData.userName} />
+              </Fade>
+              <Fade show={step.current === 1} direction={calculateDirection()}>
+                <Step1
+                  onChange={handleChange}
+                  animal={formData.animal}
+                  color={formData.color}
+                />
+              </Fade>
+              <Fade show={step.current === 2} direction={calculateDirection()}>
+                <Step2
+                  bestGame={formData.bestGame}
+                  options={bestGame}
+                  onChange={handleChange}
+                  onSubmit={handleSubmit}
+                  isComplete={isComplete}
+                />
+              </Fade>
+            </ContentWrapper>
+          </>
+        )}
+        {step === 3 && <Step3 sentData={formData} />}
+      </Container>
     </StyledContainer>
   );
 };

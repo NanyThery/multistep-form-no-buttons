@@ -12,7 +12,7 @@ const StyledInput = styled.input`
   outline: none;
 `;
 
-const Step0 = ({ onChange }) => {
+const Step0 = ({ onChange, userName }) => {
   return (
     <StyledContainer>
       <p>This is step 0</p>
@@ -20,6 +20,7 @@ const Step0 = ({ onChange }) => {
         placeholder="Insert your Name"
         id="userName"
         type="text"
+        value={userName}
         onChange={onChange}
       ></StyledInput>
     </StyledContainer>

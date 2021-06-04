@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div``;
 
-const Step2 = ({ options, onChange, onSubmit, isComplete }) => {
+const Step2 = ({ options, onChange, onSubmit, isComplete, bestGame }) => {
   return (
     <StyledContainer>
       <p>This is step 2</p>
@@ -14,6 +14,7 @@ const Step2 = ({ options, onChange, onSubmit, isComplete }) => {
             type="radio"
             id="bestGame"
             name="bestGame"
+            checked={item === bestGame}
             value={item}
             onChange={onChange}
           />

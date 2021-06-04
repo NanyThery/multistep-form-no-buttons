@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  > div {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    max-width: 500px;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -16,24 +20,27 @@ const StyledInput = styled.input`
   outline: none;
 `;
 
-const Step1 = ({ onChange }) => {
+const Step1 = ({ onChange, animal, color }) => {
   return (
     <StyledContainer>
       <p>This is step 1</p>
+      <div>
+        <StyledInput
+          placeholder="Your Favourite color"
+          id="color"
+          type="text"
+          onChange={onChange}
+          value={color}
+        ></StyledInput>
 
-      <StyledInput
-        placeholder="Your Favourite color"
-        id="color"
-        type="text"
-        onChange={onChange}
-      ></StyledInput>
-
-      <StyledInput
-        placeholder="Your pet's name"
-        id="animal"
-        type="text"
-        onChange={onChange}
-      ></StyledInput>
+        <StyledInput
+          placeholder="Your pet's name"
+          id="animal"
+          type="text"
+          value={animal}
+          onChange={onChange}
+        ></StyledInput>
+      </div>
     </StyledContainer>
   );
 };
